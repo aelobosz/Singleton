@@ -1,10 +1,9 @@
 package com.patterns.multiple;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class MultipleSingleton {
-    private static final List<MultipleSingleton> instanceList = new ArrayList<>();
+    private static final HashMap<String, MultipleSingleton> instanceMap = new HashMap<>();
     private static final String[] NAMES = {"A", "B", "C"};
     private static int turn = 0;
     private final String name;
@@ -14,12 +13,12 @@ public class MultipleSingleton {
     }
 
     public static MultipleSingleton getInstance() {
-        if (MultipleSingleton.instanceList.size() < NAMES.length) {
-            MultipleSingleton.instanceList.add(new MultipleSingleton(NAMES[turn]));
+        if (MultipleSingleton.instanceMap.size() < NAMES.length) {
+            MultipleSingleton.instanceMap.put(NAMES[turn], new MultipleSingleton(NAMES[turn]));
         }
         int turn = MultipleSingleton.turn;
         MultipleSingleton.turn = (MultipleSingleton.turn + 1) % NAMES.length;
-        MultipleSingleton instance = MultipleSingleton.instanceList.get(turn);
+        MultipleSingleton instance = MultipleSingleton.instanceMap.get(NAMES[turn]);
         System.out.println(instance);
         return instance;
     }
